@@ -18,7 +18,7 @@
       <ng-template #loggedIn>
         <div class="col-md-2 d-flex align-items-center justify-content-end">
           <div>
-            <span>Hello, {{currentUser.name}} &nbsp;&nbsp;</span>
+            <span>Hello, {{currentUser.name | titlecase}} &nbsp;&nbsp;</span>
           </div>
           <div class="dropdown text-end">
             <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -26,6 +26,7 @@
             </a>
             <ul class="dropdown-menu text-small">
               <li><a class="dropdown-item" [routerLink]="['/dashboard']">Dashboard</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/change-password']">Change Password</a></li>
               <li><a class="dropdown-item" [routerLink]="['/logout']">Sign out</a></li>
             </ul>
           </div>

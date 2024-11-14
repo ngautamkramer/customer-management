@@ -34,3 +34,26 @@ table {
     justify-content: center;
   }
   
+
+  .name-area{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .name-area .avatar{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1eafc7;
+    color: #fff;
+    border-radius: 100px;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  .mat-mdc-row.mdc-data-table__row{
+    min-height: 64px;
+  }

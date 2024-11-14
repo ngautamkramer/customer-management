@@ -23,7 +23,14 @@
       <!-- Position Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element">
+          <div class="name-area">
+            <div class="avatar">
+              {{this.getFirstCharFromString(element.name)}}
+            </div>
+            <div class="name">{{element.name | titlecase}}</div>
+          </div>
+        </td>
       </ng-container>
   
       <!-- Name Column -->
