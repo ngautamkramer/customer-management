@@ -1,92 +1,16 @@
-
-<div class="row" style="margin-top: 50px;">
-    <div class="col-md-6">
-        <h1>Customers</h1>
+<div class="row mt-5">
+    <div class="col-sm-6 col-md-6">
+        <h2>All Customer Stats</h2>
     </div>
-
-    <div class="col-md-6 text-end">
-        <a mat-flat-button color="primary" [routerLink]="['/customer/add']">+ Add Customer</a>
+    <div class="col-sm-6 col-md-6" align="right">
+        <a class="btn btn-primary" type="button" [routerLink]="['/customer/list']" routerLinkActive="router-link-active">All Customers</a>
     </div>
-
-</div>
-<br>
-<div class="mat-elevation-z8 p-4 bg-white">
-   
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
-        
-       <!-- Position Column -->
-       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="id"> Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.c_id}} </td>
-      </ng-container>
-
-      <!-- Position Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Name </th>
-        <td mat-cell *matCellDef="let element">
-          <div class="name-area">
-            <div class="avatar">
-              {{this.getFirstCharFromString(element.name)}}
-            </div>
-            <div class="name">{{element.name | titlecase}}</div>
-          </div>
-        </td>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="mobile_number">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="mobile_number"> Mobile No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.mobile_number}} </td>
-      </ng-container>
-  
-      <!-- Weight Column -->
-      <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="address"> Address </th>
-        <td mat-cell *matCellDef="let element"> {{element.address}} </td>
-      </ng-container>
-  
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="visit_date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="visit_date"> Visit Date </th>
-        <td mat-cell *matCellDef="let element"> {{element.visit_date | date :'yyyy-MM-dd'}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="created_at">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="created_at"> Created Date </th>
-        <td mat-cell *matCellDef="let element"> {{element.created_at | date :'yyyy-MM-dd HH:mm:ss' }} </td>
-      </ng-container>
-
-    
-      <ng-container matColumnDef="star" stickyEnd>
-        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-        <td mat-cell *matCellDef="let element">
-            <div class="example-flex-container">
-                <div class="example-button-container">
-                  <a type="button" mat-mini-fab color="accent" aria-label="Example icon button with a bookmark icon"  matTooltip="Edit Customer" [routerLink]="['/customer/edit', element.c_id]">
-                    <mat-icon>edit</mat-icon>
-                  </a>
-                </div>
-
-                <div class="example-button-container">
-                    <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon" matTooltip="Delete Customer" (click)=" deleteCustomer(element.c_id)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                </div>
-              </div>
-        </td>
-      </ng-container>
-
-      
-      <tr class="mat-row" *matNoDataRow align="center">
-        <td class="mat-cell" colspan="6" style="padding: 40px;">No Result</td>
-      </tr>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
-  
 </div>
 
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <div>
+            <canvas id="canvas">{{chart}}</canvas>
+        </div>
+    </div>
+</div>

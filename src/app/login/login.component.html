@@ -1,19 +1,23 @@
-    <main class="form-signin w-100 m-auto">
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-      
-          <div class="form-floating">
-            <input type="email" class="form-control" placeholder="name@example.com" formControlName="email">
-            <label for="floatingInput">Email address</label>
-          </div>
-          <div class="form-floating">
-            <input type="password" class="form-control" placeholder="Password" formControlName="password">
-            <label for="floatingPassword">Password</label>
-          </div>
-          
-          <div class="py-2">
-            <button class="btn btn-primary w-100 py-2" type="submit" [disabled]="!userForm.valid">Sign in</button>
-          </div>
+<section class="all-center">
 
-        </form>
-      </main>
+  <h1 class="h3 mt-5 fw-normal">Please sign in</h1>
+
+  <div class="form-signin w-100 m-auto">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-floating">
+        <input type="email" class="form-control" placeholder="name@example.com" formControlName="email">
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <div class="py-2">
+        <button class="btn btn-primary w-100 py-2" type="submit" [disabled]="!userForm.valid">Sign in</button>
+      </div>
+
+    </form>
+  </div>
+  
+</section>

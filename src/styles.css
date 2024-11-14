@@ -5,13 +5,9 @@ body { margin: 0; font-family: sans-serif !important; }
 
 
 /* for login & register form */
-
 .form-signin {
-    max-width: 330px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
+    max-width: 350px;
+    height: auto;
   }
   
   .form-signin .form-floating:focus-within {
@@ -23,4 +19,11 @@ body { margin: 0; font-family: sans-serif !important; }
     margin-bottom: 10px;
   }
   
+
+  .all-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 /* end for login & register form */
