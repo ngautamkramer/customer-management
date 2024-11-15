@@ -2,15 +2,37 @@
     <div class="col-sm-6 col-md-6">
         <h2>All Customer Stats</h2>
     </div>
-    <div class="col-sm-6 col-md-6" align="right">
-        <a class="btn btn-primary" type="button" [routerLink]="['/customer/list']" routerLinkActive="router-link-active">All Customers</a>
+    <div class="col-sm-6 col-md-6">
+        <div class="row justify-content-end">
+            <div class="col-md-7">
+                <mat-form-field>
+                    <mat-label>Select</mat-label>
+                    <mat-select (selectionChange)="onSelectionChange($event)" [value]="2024">
+                        @for (year of yearsList; track year) {
+                            <mat-option [value]="year">{{ year }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-primary" type="button" [routerLink]="['/customer/list']" routerLinkActive="router-link-active">All Customers</a>
+            </div>
+        </div>
     </div>
 </div>
 
+
 <div class="row">
     <div class="col-sm-12 col-md-12">
-        <div>
-            <canvas id="canvas">{{chart}}</canvas>
+        <div chartType="bar" class="py-5">
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [type]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            >
+            </canvas>
         </div>
     </div>
 </div>
