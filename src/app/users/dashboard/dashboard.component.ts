@@ -48,6 +48,7 @@ export class DashboardComponent {
     //console.log(event, active);
   }
 
+  
   public chartHovered({
     event,
     active,
@@ -74,7 +75,6 @@ export class DashboardComponent {
     });
 
     this.barChartData.datasets[0].data = chartSampleData;
-
     this.chart?.update();
   }
 
@@ -93,6 +93,7 @@ export class DashboardComponent {
     }
   }
   
+
   setAllYearsInDropdown(startYear:number){
     const currentYear = new Date().getFullYear();
     for (let year = startYear; year <= currentYear; year++) {
@@ -101,14 +102,17 @@ export class DashboardComponent {
     this.yearsList.reverse();
   }
 
+
   ngOnInit(): void {
     this.getAllCustomers();
     this.setAllYearsInDropdown(2015);
   }
 
+
   onSelectionChange(event: MatSelectChange): void {
     this.selectedYear = event.value;
     this.getAllCustomers();
   }
+
 
 }

@@ -1,0 +1,67 @@
+<section>
+    <div class="container py-5">
+
+        <div class="row">
+
+            <div class="col-md-6 col-lg-7 col-xl-8 chat-box-center">
+
+                <ul class="list-unstyled">
+
+                    @for (chat of messagesLists; track $index) {
+
+                    @if (chat.client_id == currentClientId) {
+
+                    <li class="d-flex justify-content-between mb-4">
+                        <div class="card w-100">
+                            <div class="card-header d-flex justify-content-between p-3">
+                                <p class="fw-bold mb-0">{{chat.name}}</p>
+                                <p class="text-muted small mb-0"><i class="far fa-clock"></i>{{chat.datetime | dateAgo}}
+                                </p>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">{{chat.message}}</p>
+                            </div>
+                        </div>
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
+                            class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+                    </li>
+
+                    }@else{
+
+
+                    <li class="d-flex justify-content-between mb-4">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+                            class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+                        <div class="card w-100">
+                            <div class="card-header d-flex justify-content-between p-3">
+                                <p class="fw-bold mb-0">{{chat.name}}</p>
+                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> {{chat.datetime |
+                                    dateAgo}}</p>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">{{chat.message}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    }
+                    }
+
+                </ul>
+
+                <div style="display:flex;flex-direction:column;row-gap:8px;">
+                    <div>
+                        <textarea class="form-control bg-body-tertiary" id="textAreaExample2" [(ngModel)]="newMessage"
+                            rows="4" (keydown.enter)="sendMessage()"></textarea>
+                    </div>
+                    <div style="display: flex;column-gap: 10px;justify-content: end;">
+                        <button mat-stroked-button color="primary">Attachment</button>
+                        <button mat-flat-button color="primary" (click)="sendMessage()">Send</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
