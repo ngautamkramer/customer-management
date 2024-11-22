@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, Output, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
@@ -23,6 +23,7 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 })
 export class ListComponent {
 
+
   constructor(private router: Router, private apiService: ApiService, public dialog: MatDialog){
 
   }
@@ -32,6 +33,7 @@ export class ListComponent {
   dataSource = new MatTableDataSource<PeriodicElement>();
   allDataSourceTmp: any;
   userInfo: any;
+  cDataInfo: any;
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -124,6 +126,11 @@ export class ListComponent {
   getFirstCharFromString(textname: string){
     return this.apiService.getFirstCharFromString(textname);
   }
+
+  getChildData(val: any){
+    this.cDataInfo = val;
+  }
+
 }
 
 

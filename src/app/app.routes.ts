@@ -12,15 +12,15 @@ import { DashboardComponent } from './users/dashboard/dashboard.component';
 import { ChatComponent } from './chat/chat.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent, data: { title: 'Home', description: 'Welcome to our homepage', keywords: 'home, seo' }},
-    { path: 'login', component: LoginComponent, data: { title: 'Login', description: 'Welcome to our login page', keywords: 'login, seo' }},
-    { path: 'register', component: RegisterComponent, data: { title: 'Register', description: 'Welcome to our register page', keywords: 'register, seo' }},
-    { path: 'customer/list', component: ListComponent, canActivate: [authGuard], data: { title: 'Customer List', description: 'Welcome to our customer list', keywords: 'customer list, seo' }},
+    { path: '', component: HomeComponent, title: 'Home', data: { title: 'Home', description: 'Welcome to our homepage', keywords: 'home, seo' }},
+    { path: 'login', component: LoginComponent, title: 'Login', data: { title: 'Login', description: 'Welcome to our login page', keywords: 'login, seo' }},
+    { path: 'register', component: RegisterComponent, title: 'Register', data: { title: 'Register', description: 'Welcome to our register page', keywords: 'register, seo' }},
+    { path: 'customer/list', component: ListComponent, title: 'Customer List', canActivate: [authGuard], data: { title: 'Customer List', description: 'Welcome to our customer list', keywords: 'customer list, seo' }},
     { path: 'logout', component: LogoutComponent, data: { title: 'Logout', description: 'Welcome to our logout', keywords: 'logout, seo' }},
-    { path: 'customer/add', component: AddComponent, canActivate: [authGuard], data: { title: 'Add New Customer', description: 'Welcome to our add customer oage', keywords: 'add customer, seo' }},
-    { path: 'customer/edit/:id', component: EditComponent, canActivate: [authGuard], data: { title: 'Edit Customer', description: 'Welcome to our edit customer page', keywords: 'edit customer, seo' }},
-    { path: 'change-password', component: ChangePasswordComponent, canActivate: [authGuard], data: { title: 'Change Password', description: 'Welcome to our change password page', keywords: 'change password, seo' }},
-    { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard], data: { title: 'dashboard', description: 'Welcome to our dashboard page', keywords: 'change password, seo' }},
-    { path: 'customer/chats', component: ChatComponent, canActivate: [authGuard], data: { title: 'Chat', description: 'Welcome to our chat page', keywords: 'Chat page, seo' }}
+    { path: 'customer/add', component: AddComponent, title: 'Add New Customer', canActivate: [authGuard], data: { title: 'Add New Customer', description: 'Welcome to our add customer oage', keywords: 'add customer, seo' }},
+    { path: 'customer/edit/:id', component: EditComponent,  title: 'Edit Customer', canActivate: [authGuard], data: { title: 'Edit Customer', description: 'Welcome to our edit customer page', keywords: 'edit customer, seo' }},
+    { path: 'change-password', component: ChangePasswordComponent, title: 'Change Password', canActivate: [authGuard], data: { title: 'Change Password', description: 'Welcome to our change password page', keywords: 'change password, seo' }},
+    { path: 'dashboard', component: DashboardComponent, title: 'dashboard', canActivate: [authGuard], data: { title: 'dashboard', description: 'Welcome to our dashboard page', keywords: 'change password, seo' }},
+    { path: 'customer/chats', component: ChatComponent, title: 'Chat', canActivate: [authGuard], data: { title: 'Chat', description: 'Welcome to our chat page', keywords: 'Chat page, seo' }}
 
 ];

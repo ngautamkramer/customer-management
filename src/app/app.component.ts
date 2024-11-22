@@ -23,7 +23,7 @@ export class AppComponent {
 
 
   ngOnInit(): void {
-    this.router.events.subscribe(() => {
+    /*this.router.events.subscribe(() => {
       const childRoute = this.route.firstChild;
       if (childRoute) {
         const title = childRoute.snapshot.data['title'] || 'User Management';
@@ -31,7 +31,7 @@ export class AppComponent {
         const keywords = childRoute.snapshot.data['keywords'] || 'default, keywords';
         this.setMetaTags(title, description, keywords);
       }
-    });
+    });*/
   }
 
 
