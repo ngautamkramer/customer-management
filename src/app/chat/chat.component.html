@@ -61,12 +61,11 @@
                 <div style="display:flex;flex-direction:column;row-gap:8px;">
                     <div>{{typingIndicator | titlecase}}</div>
                     <div>
-                        <textarea class="form-control bg-body-tertiary" id="textAreaExample2" [(ngModel)]="newMessage"
-                            rows="4" (keydown.enter)="sendMessage()" (input)="typingMessageInput()" (keyup)="typingMessageKeyup()"></textarea>
+                        <textarea class="form-control bg-body-tertiary" id="textAreaExample2" placeholder="Enter text here..." [(ngModel)]="newMessage"
+                            rows="4" (keydown.enter)="sendMessage()" (input)="typingMessageInput()" (keyup)="typingMessageKeyup()" style="background: #f3f5f7;border: 1px solid #3f51b5;"></textarea>
                     </div>
                     <div style="display: flex;column-gap: 10px;justify-content: end;">
-                        <button mat-stroked-button color="primary">Attachment</button>
-                        <button mat-flat-button color="primary" (click)="sendMessage()">Send</button>
+                        <button mat-flat-button color="primary" (click)="sendMessage()" style="width:150px;">Send</button>
                     </div>
                 </div>
 
