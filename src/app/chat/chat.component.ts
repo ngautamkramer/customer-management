@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [MatButtonModule, FormsModule, DateAgoPipe, CommonModule],
+  imports: [MatButtonModule, FormsModule, DateAgoPipe, CommonModule, PickerModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
   providers: [ApiService]
@@ -27,13 +28,15 @@ export class ChatComponent {
   typingTimeout: any = null;
   typingIndicator: string = '';
 
+  showEmojiPicker = false; // Controls visibility of the emoji picker
+
+  
   constructor(private socketService: SocketService, private apiService: ApiService) {}
 
   
   ngOnInit(): void {
     this.initializeSocketFunctions();
   }
-
 
   initializeSocketFunctions(){
     this.currentClientName = this.currentUser.name;
@@ -58,7 +61,7 @@ export class ChatComponent {
 
     });
 
-    
+      
     // Listen for typing events from others
     this.socketService.on('startTyping').subscribe((message: string) => {
       this.typingIndicator = `${message} is typing...`;
@@ -102,5 +105,16 @@ export class ChatComponent {
         this.socketService.emit('stopTyping', this.currentUser.name);
     }, 3000);
   }
+
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmoji(event: any) {
+    console.log(event);
+    this.newMessage += event.emoji.native; // Append the selected emoji to the message
+  }
+
+  
 
 }

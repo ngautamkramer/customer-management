@@ -60,7 +60,12 @@
 
                 <div style="display:flex;flex-direction:column;row-gap:8px;">
                     <div>{{typingIndicator | titlecase}}</div>
-                    <div>
+                    <div style="position:relative;">
+                        <div *ngIf="showEmojiPicker">
+                            <emoji-mart (emojiSelect)="addEmoji($event)" [style]="{ position: 'absolute', bottom: '110px', left: '0px' }"></emoji-mart>
+                        </div>
+                        <button (click)="toggleEmojiPicker()" style="position:absolute;bottom:2px;left:2px;border: 0;">😊</button>
+                        
                         <textarea class="form-control bg-body-tertiary" id="textAreaExample2" placeholder="Enter text here..." [(ngModel)]="newMessage"
                             rows="4" (keydown.enter)="sendMessage()" (input)="typingMessageInput()" (keyup)="typingMessageKeyup()" style="background: #f3f5f7;border: 1px solid #3f51b5;"></textarea>
                     </div>
