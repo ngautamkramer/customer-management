@@ -6,7 +6,7 @@
 }
 
 .location-content div{
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #8080804d;
     display: flex;
     align-items: center;
     justify-content: space-between;

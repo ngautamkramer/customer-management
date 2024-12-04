@@ -1,7 +1,6 @@
 
 .hello-btn-tab{
     display: flex;
-    gap: 15px;
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 15px;
@@ -11,19 +10,24 @@
 
 .hello-btn-tab a{
     color: #000;
-    height: 38px;
+    height: 40px;
     display: flex;
     justify-content: left;
     align-items: center;
     font-weight: bold;
-    border: 1px solid #dee2e6;
-    padding: 0px 25px;
+    border-left: 1px solid #b7b7b7;
+    padding: 0px 40px;
     text-decoration: none;
-    border-radius: 5px;
     background-color: #dee2e6;
+}
+
+.hello-btn-tab a:not(.active):hover{
+    background-color: #b7c4d1;
+    color: #464242;
 }
 
 .hello-btn-tab .active{
     background-color: #3a8bdb;
     border-color: #3a8bdb;
+    color: #fff;
 }

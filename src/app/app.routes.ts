@@ -101,6 +101,10 @@ export const routes: Routes = [
             {
                 path: 'weather',
                 loadComponent: () => import('./users/dashboard-curr-weather/dashboard-curr-weather.component').then((m) => m.DashboardCurrWeatherComponent),
+            },
+            {
+                path: 'chat',
+                loadComponent: () => import('./chat/chat.component').then((m) => m.ChatComponent),
             }
         ]
     },

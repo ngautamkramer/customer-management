@@ -180,4 +180,7 @@ export class ApiService {
     return this.http.get('http://ip-api.com/json');
   }
 
+  getWeather(lat: any, long:any){
+    return this.http.get('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+long+'&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m');
+  }
 } 
