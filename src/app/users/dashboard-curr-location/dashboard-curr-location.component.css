@@ -1,0 +1,27 @@
+.location-content{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin: 0 auto;
+}
+
+.location-content div{
+    border-bottom: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    font-size: 16px;
+}
+
+.location-content div:last-child{
+    border: 0;
+}
+
+.location-content h3{
+    text-align: center;
+    margin-top: 35px;
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 20px;
+}

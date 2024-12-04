@@ -1,0 +1,12 @@
+
+<div *ngIf="locationData" class="location-content">
+    <h3>Your Location Details</h3>
+    <div><strong>IP:</strong> <span>{{ locationData.query }} </span></div>
+    <div><strong>City:</strong> <span>{{ locationData.city }} </span></div>
+    <div><strong>Region:</strong> <span>{{ locationData.region + " (" + locationData.regionName + ")" }} </span></div>
+    <div><strong>Country:</strong> <span>{{ locationData.country }} </span></div>
+    <div><strong>Location:</strong> <span>{{ locationData.lat + ','+ locationData.lon }} </span></div> 
+    <div><strong>Pin Code:</strong> <span>{{ locationData.zip }} </span></div>
+    <div><strong>Timeone:</strong> <span>{{ locationData.timezone }} </span></div> 
+  </div>
+  

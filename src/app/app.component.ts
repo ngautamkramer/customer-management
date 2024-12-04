@@ -1,29 +1,40 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from "./footer/footer.component";
 import { Meta, Title } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   
+  isLoading = false;
 
   constructor(
     private titleService: Title,
     private metaService: Meta,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        this.isLoading = true;
+      } else if (event instanceof NavigationEnd) {
+        this.isLoading = false;
+      }
+    });
+  }
 
 
   ngOnInit(): void {
-    /*this.router.events.subscribe(() => {
+    this.router.events.subscribe(() => {
       const childRoute = this.route.firstChild;
       if (childRoute) {
         const title = childRoute.snapshot.data['title'] || 'User Management';
@@ -31,7 +42,7 @@ export class AppComponent {
         const keywords = childRoute.snapshot.data['keywords'] || 'default, keywords';
         this.setMetaTags(title, description, keywords);
       }
-    });*/
+    });
   }
 
 

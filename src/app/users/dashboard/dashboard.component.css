@@ -1,0 +1,29 @@
+
+.hello-btn-tab{
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid gray;
+    margin-top: 50px;
+}
+
+.hello-btn-tab a{
+    color: #000;
+    height: 38px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-weight: bold;
+    border: 1px solid #dee2e6;
+    padding: 0px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #dee2e6;
+}
+
+.hello-btn-tab .active{
+    background-color: #3a8bdb;
+    border-color: #3a8bdb;
+}

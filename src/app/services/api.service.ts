@@ -176,4 +176,8 @@ export class ApiService {
   }
   
 
+  getLocation(){
+    return this.http.get('http://ip-api.com/json');
+  }
+
 } 

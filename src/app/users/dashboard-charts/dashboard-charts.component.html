@@ -1,0 +1,35 @@
+<div class="row mt-5">
+    <div class="col-sm-6 col-md-6">
+        <h2>All Customer Stats</h2>
+    </div>
+    <div class="col-sm-6 col-md-6">     
+        <div class="d-flex" style="justify-content:end;align-items:center;gap:15px;">
+            <mat-form-field>
+                <mat-label>Select</mat-label>
+                <mat-select (selectionChange)="onSelectionChange($event)" [value]="2024">
+                    @for (year of yearsList; track year) {
+                        <mat-option [value]="year">{{ year }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <a class="btn btn-secondary" type="button" [routerLink]="['/customer/chats']" routerLinkActive="router-link-active">Let's Chat</a>
+            <a class="btn btn-primary" type="button" [routerLink]="['/customer/list']" routerLinkActive="router-link-active">All Customers</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <div chartType="bar" class="py-5">
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [type]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            >
+            </canvas>
+        </div>
+    </div>
+</div>
