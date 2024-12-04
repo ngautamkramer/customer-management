@@ -1,1 +1,66 @@
-<p>dashboard-curr-weather works!</p>
+<div class="camera-container">
+
+    <div class="camera-part1">
+        <video #videoElement autoplay playsinline></video>
+        <div class="controls">
+            <button (click)="startCamera()" class="btn btn-success" [disabled]="startBtnStatus">Turn On Camera</button>
+            <button (click)="stopCamera()" class="btn btn-danger" [disabled]="stopBtnStatus">Turn Off Camera</button>
+        </div>
+    </div>
+
+
+    @if (currVideoInformation) {
+
+    <div class="camera-part2">
+        <div class="row-area">
+            <div class="row-area-part">
+                <strong>Camera Name:</strong>
+                <span>{{currVideoInformation.label}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Resolution:</strong>
+                <span>{{currVideoInformation.settings.width + "x" + currVideoInformation.settings.height}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Aspect Ratio:</strong>
+                <span>{{currVideoInformation.settings.aspectRatio}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Frame Rate:</strong>
+                <span>{{currVideoInformation.settings.frameRate}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Color Temperature:</strong>
+                <span>{{currVideoInformation.settings.colorTemperature}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Contrast:</strong>
+                <span>{{currVideoInformation.settings.contrast}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Exposure Mode:</strong>
+                <span>{{currVideoInformation.settings.exposureMode}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Saturation:</strong>
+                <span>{{currVideoInformation.settings.saturation}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Sharpness:</strong>
+                <span>{{currVideoInformation.settings.sharpness}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>white BalanceMode:</strong>
+                <span>{{currVideoInformation.settings.whiteBalanceMode}}</span>
+            </div>
+            <div class="row-area-part">
+                <strong>Brightness:</strong>
+                <span>{{currVideoInformation.settings.brightness}}</span>
+            </div>
+
+        </div>
+    </div>
+
+    }
+
+</div>
