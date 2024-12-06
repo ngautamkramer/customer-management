@@ -111,9 +111,9 @@ export class ChatComponent {
 
   typingMessageInput(){
     if(this.newMessage.trim()){
-      this.socketService.emit('startTyping', this.currentUser.name);
+      //this.socketService.emit('startTyping', this.currentUser.name);
     }else{
-      this.socketService.emit('stopTyping', this.currentUser.name);
+      //this.socketService.emit('stopTyping', this.currentUser.name);
     }
   }
 
@@ -121,7 +121,7 @@ export class ChatComponent {
   typingMessageKeyup(){
     clearTimeout(this.typingTimeout);
     this.typingTimeout = setTimeout(() => {
-        this.socketService.emit('stopTyping', this.currentUser.name);
+        //this.socketService.emit('stopTyping', this.currentUser.name);
     }, 3000);
   }
 
