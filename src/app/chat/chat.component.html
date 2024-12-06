@@ -20,9 +20,9 @@
                                 </p>
                             </div>
                             <div class="card-body">
-                                <p class="mb-0">{{chat.message}}</p>
+                                <p class="mb-0" [innerHTML]="render_message(chat.message)"></p>
                                 @if (chat.files.path) {
-                                <p class="mb-0"><img width="250" src="{{apiPath + chat.files.path}}"></p>
+                                <p class="mb-0" [innerHTML]="render_message(apiPath + chat.files.path)"></p>
                                 }
                             </div>
                         </div>
@@ -44,9 +44,9 @@
                                     dateAgo}}</p>
                             </div>
                             <div class="card-body">
-                                <p class="mb-0">{{chat.message}}</p>
+                                <p class="mb-0" [innerHTML]="render_message(chat.message)"></p>
                                 @if (chat.files.path) {
-                                <p class="mb-0"><img width="250" src="{{apiPath + chat.files.path}}"></p>
+                                <p class="mb-0" [innerHTML]="render_message(apiPath + chat.files.path)"></p>
                                 }
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                     <div style="display: flex;column-gap: 10px;justify-content: end;">
                         <input type="file" (change)="this.uploadFile($event)" class="file-inp">
                         <button mat-flat-button color="primary" (click)="sendMessage()"
-                            style="width:150px;">Send</button>
+                            style="width:150px;" [disabled]="sendBtnStatus">Send</button>
                     </div>
                 </div>
 

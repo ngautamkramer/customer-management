@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat',
@@ -33,8 +34,9 @@ export class ChatComponent {
   showEmojiPicker = false;
   apiPath: string = environment.api_url;
   private subscriptions: Subscription = new Subscription();
+  sendBtnStatus: boolean = false;
 
-  constructor(private socketService: SocketService, private apiService: ApiService) {}
+  constructor(private socketService: SocketService, private apiService: ApiService, private sanitizer: DomSanitizer) {}
 
   
   initializeSocketFunctions(){
@@ -144,17 +146,25 @@ export class ChatComponent {
 
     const formData = new FormData();
     formData.append('file', selectedFile);
+    this.sendBtnStatus = true;
     this.apiService.sendUploadFileRequest(formData).subscribe({
       next: (response) => {
         //send image chat 
         let messageObj = {client_id: this.currentClientId, name: this.currentClientName, message: this.newMessage, files: response.body.file};
         this.socketService.emit('clientMessage', messageObj); 
-        alert("File uploaded successfully");
+        //alert("File uploaded successfully");
+        this.sendBtnStatus = false;
       },
       error: (error) => {
         console.error('Error during POST:', error.message);
+        this.sendBtnStatus = false;
       }
     });
+
+  }
+
+  render_message(string: string){
+    return this.sanitizer.bypassSecurityTrustHtml(this.apiService.transform(string) );
 
   }
 

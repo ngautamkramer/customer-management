@@ -192,4 +192,39 @@ export class ApiService {
     });
   }
 
+  transform(value: string): string {
+    if (!value) return value;
+
+    const urlRegex = /https?:\/\/[^\s]+/g; // Match URLs
+    const imageRegex = /\.(jpeg|jpg|gif|png|webp|svg)$/i; // Match image extensions
+    const videoRegex = /\.(mp4|webm|ogg)$/i; // Match video extensions
+    const youtubeRegex = /https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]+)/; // Match YouTube links
+
+    return value.replace(urlRegex, (url) => {
+      if (imageRegex.test(url)) {
+        // Render as image
+        return `<img src="${url}" alt="Image" style="max-width:250px; max-height: 500px;" />`;
+      } else if (videoRegex.test(url)) {
+        // Render as video
+        return `<video controls style="max-width: 100%; max-height: 200px;">
+                  <source src="${url}" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>`;
+      } else if (youtubeRegex.test(url)) {
+        // Render as YouTube embed
+        const videoId = youtubeRegex.exec(url)?.[3];
+        return `<iframe 
+                  width="100%" 
+                  height="200" 
+                  src="https://www.youtube.com/embed/${videoId}" 
+                  frameborder="0" 
+                  allowfullscreen>
+                </iframe>`;
+      } else {
+        // Render as clickable link
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+      }
+    });
+  }
+
 } 
