@@ -24,3 +24,9 @@
     z-index: 1000;
 }
   
+.file-inp{
+    border: 1px solid;
+    padding: 5px;
+    border-radius: 5px;
+    background: #e3eef8;
+}

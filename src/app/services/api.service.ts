@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
@@ -183,4 +183,13 @@ export class ApiService {
   getWeather(lat: any, long:any){
     return this.http.get('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+long+'&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m');
   }
+
+  // HTTP call to upload the file
+  sendUploadFileRequest(formData: FormData): Observable<any> {
+    return this.http.post(environment.api_url + "upload_files", formData, {
+      headers: new HttpHeaders(),
+      observe: 'response'
+    });
+  }
+
 } 

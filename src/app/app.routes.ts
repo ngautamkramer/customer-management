@@ -107,16 +107,6 @@ export const routes: Routes = [
                 loadComponent: () => import('./chat/chat.component').then((m) => m.ChatComponent),
             }
         ]
-    },
-    {
-        path: 'customer/chats',
-        loadComponent: () => import('./chat/chat.component').then((m) => m.ChatComponent),
-        canActivate: [authGuard],
-        data: {
-            title: 'Chat',
-            description: 'Welcome to our chat page',
-            keywords: 'Chat page, seo'
-        }
     }
 
 ];

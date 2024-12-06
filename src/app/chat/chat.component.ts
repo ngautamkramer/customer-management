@@ -6,6 +6,8 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { environment } from '../../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -28,27 +30,22 @@ export class ChatComponent {
   typingTimeout: any = null;
   typingIndicator: string = '';
 
-  showEmojiPicker = false; // Controls visibility of the emoji picker
+  showEmojiPicker = false;
+  apiPath: string = environment.api_url;
+  private subscriptions: Subscription = new Subscription();
 
-  
   constructor(private socketService: SocketService, private apiService: ApiService) {}
 
   
-  ngOnInit(): void {
-    this.initializeSocketFunctions();
-  }
-
   initializeSocketFunctions(){
+
     this.currentClientName = this.currentUser.name;
 
-    this.socketService.on('connect').subscribe(() => {
-      this.currentClientId = this.socketService['socket']['id'];
-    });
-
     // Listen for incoming messages
-    this.socketService.on('serverMessage').subscribe((message: string) => {
+    const messageSub1 = this.socketService.on<any>('serverMessage').subscribe((message: any) => {
       console.log("---- message from server ----");
       this.messagesLists.push(message);
+      console.log(this.messagesLists);
 
       let cntCar = this.scrollContainer;
       setTimeout(function(){
@@ -58,38 +55,57 @@ export class ChatComponent {
           behavior: 'smooth'
         });
       });
-
     });
+    this.subscriptions.add(messageSub1);
 
-      
-    // Listen for typing events from others
-    this.socketService.on('startTyping').subscribe((message: string) => {
+
+    const messageSub2 =  this.socketService.on<string>('startTyping').subscribe((message: string) => {
       this.typingIndicator = `${message} is typing...`;
     });
+    this.subscriptions.add(messageSub2);
 
-    this.socketService.on('stopTyping').subscribe((message: string) => {
+
+    const messageSub3 =  this.socketService.on<string>('stopTyping').subscribe((message: string) => {
       this.typingIndicator = '';
     });
+    this.subscriptions.add(messageSub3);
 
   }
+
 
   sendMessage(): void {
     if (this.newMessage.trim()) {
       console.log("---- message sent server ----");
-      let messageObj = {client_id: this.currentClientId, name: this.currentClientName, message: this.newMessage};
+      let messageObj = {client_id: this.currentClientId, name: this.currentClientName, message: this.newMessage, files: ''};
       this.socketService.emit('clientMessage', messageObj);
       this.newMessage = '';
       this.socketService.emit('stopTyping', this.currentUser.name);
     }
   }
 
+  
+  ngOnInit(): void {
+    this.socketService.isConnected().subscribe((connected) => {
+      if (connected) {
+        this.currentClientId = this.socketService.getSocketId();
+        this.initializeSocketFunctions();
+      }
+    });
+  }
+
   ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks
+    if (this.subscriptions) {
+      this.subscriptions.unsubscribe();
+    }
     this.socketService.disconnect();
   }
+
 
   getImageFromName(name: string){
     return this.apiService.getFirstCharFromString(name);
   }
+
 
   typingMessageInput(){
     if(this.newMessage.trim()){
@@ -99,6 +115,7 @@ export class ChatComponent {
     }
   }
 
+
   typingMessageKeyup(){
     clearTimeout(this.typingTimeout);
     this.typingTimeout = setTimeout(() => {
@@ -106,15 +123,40 @@ export class ChatComponent {
     }, 3000);
   }
 
+
   toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
   }
+
 
   addEmoji(event: any) {
     console.log(event);
     this.newMessage += event.emoji.native; // Append the selected emoji to the message
   }
 
-  
+
+  uploadFile(event: any){
+    let selectedFile = event.target.files[0];
+
+    if(!selectedFile){
+      alert("Please select a file before uploading."); return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    this.apiService.sendUploadFileRequest(formData).subscribe({
+      next: (response) => {
+        //send image chat 
+        let messageObj = {client_id: this.currentClientId, name: this.currentClientName, message: this.newMessage, files: response.body.file};
+        this.socketService.emit('clientMessage', messageObj); 
+        alert("File uploaded successfully");
+      },
+      error: (error) => {
+        console.error('Error during POST:', error.message);
+      }
+    });
+
+  }
+
 
 }

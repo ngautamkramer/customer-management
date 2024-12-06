@@ -15,11 +15,17 @@ export class DashboardCurrWeatherComponent {
 
 
   @ViewChild('videoElement', { static: false }) videoElement!: ElementRef<HTMLVideoElement>;
+  @ViewChild('canvasElement', { static: false }) canvasElement!: ElementRef<HTMLCanvasElement>;
+
+
   private stream: MediaStream | null = null;
   currVideoInformation: any;
 
   startBtnStatus: boolean = false;
   stopBtnStatus: boolean = true;
+  imageTmp: any;
+  screenshot: string | null = null;
+
 
   // Turn on the camera
   async startCamera() {
@@ -71,6 +77,36 @@ export class DashboardCurrWeatherComponent {
   // Ensure the camera is turned off when the component is destroyed
   ngOnDestroy() {
     this.stopCamera();
+  }
+
+    // Capture screenshot from the video stream
+    captureScreenshot() {
+      const video = this.videoElement.nativeElement;
+      const canvas = this.canvasElement.nativeElement;
+      const ctx = canvas.getContext('2d');
+  
+      if (ctx) {
+        // Set canvas dimensions to match the video dimensions
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+  
+        // Draw the current frame of the video onto the canvas
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+        // Extract image data from the canvas
+        const image = canvas.toDataURL('image/png');
+        
+        // Set the captured image to the screenshot variable
+        this.screenshot = image;
+        this.downloadImage(image);
+      }
+    }
+  
+  downloadImage(img: any){
+    const link = document.createElement('a');
+    link.href = img;
+    link.download = 'screenshot.png';
+    link.click();
   }
 
 } 

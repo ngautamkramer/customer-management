@@ -5,7 +5,9 @@
         <div class="controls">
             <button (click)="startCamera()" class="btn btn-success" [disabled]="startBtnStatus">Turn On Camera</button>
             <button (click)="stopCamera()" class="btn btn-danger" [disabled]="stopBtnStatus">Turn Off Camera</button>
+            <button (click)="captureScreenshot()" class="btn btn-danger" [disabled]="stopBtnStatus">Get Screenshot</button>
         </div>
+        <canvas #canvasElement style="display: none;"></canvas>
     </div>
 
 
@@ -23,7 +25,7 @@
             </div>
             <div class="row-area-part">
                 <strong>Aspect Ratio:</strong>
-                <span>{{currVideoInformation.settings.aspectRatio}}</span>
+                <span>{{currVideoInformation.settings.aspectRatio | number: '1.1-1'}}</span>
             </div>
             <div class="row-area-part">
                 <strong>Frame Rate:</strong>
