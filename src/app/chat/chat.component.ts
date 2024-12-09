@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { SocketService } from '../services/socket.service';
 import { FormsModule } from '@angular/forms';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
@@ -7,7 +7,7 @@ import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { environment } from '../../environments/environment';
-import { Subscription } from 'rxjs';
+import { bufferTime, Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -27,7 +27,7 @@ export class ChatComponent {
   newMessage: string = '';
   currentClientId: any = null;
   currentClientName: string = '';
-  currentUser =  this.apiService.getUserInfo();
+  currentUser = this.apiService.getUserInfo();
   typingTimeout: any = null;
   typingIndicator: string = '';
 
@@ -36,56 +36,60 @@ export class ChatComponent {
   private subscriptions: Subscription = new Subscription();
   sendBtnStatus: boolean = false;
 
-  constructor(private socketService: SocketService, private apiService: ApiService, private sanitizer: DomSanitizer) {}
+  constructor(private socketService: SocketService, private apiService: ApiService, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) { }
 
+
+  scrollToBottom(): void {
+    if (this.scrollContainer) {
+      requestAnimationFrame(() => {
+        this.scrollContainer.nativeElement.scroll({
+          top: this.scrollContainer.nativeElement.scrollHeight,
+          behavior: 'smooth',
+        });
+      });
+    }
+  }
   
-  initializeSocketFunctions(){
+
+  initializeSocketFunctions() {
 
     this.currentClientName = this.currentUser.name;
 
     // Listen for incoming messages
     const messageSub1 = this.socketService.on<any>('serverMessage').subscribe((message: any) => {
-      console.log("---- message from server ----");
-      this.messagesLists.push(message);
+      console.log("---- message recevied from server ----");
+      this.messagesLists = [...this.messagesLists, message];
       console.log(this.messagesLists);
-
-      let cntCar = this.scrollContainer;
-      setTimeout(function(){
-        cntCar.nativeElement.scroll({
-          top: cntCar.nativeElement.scrollHeight,
-          left: 0,
-          behavior: 'smooth'
-        });
-      });
+      this.cdr.detectChanges();
+      this.scrollToBottom();
     });
     this.subscriptions.add(messageSub1);
 
 
-    const messageSub2 =  this.socketService.on<string>('startTyping').subscribe((message: string) => {
+    /*const messageSub2 = this.socketService.on<string>('startTyping').subscribe((message: string) => {
       this.typingIndicator = `${message} is typing...`;
     });
     this.subscriptions.add(messageSub2);
 
-
-    const messageSub3 =  this.socketService.on<string>('stopTyping').subscribe((message: string) => {
+    const messageSub3 = this.socketService.on<string>('stopTyping').subscribe((message: string) => {
       this.typingIndicator = '';
     });
-    this.subscriptions.add(messageSub3);
+    this.subscriptions.add(messageSub3);*/
 
   }
 
 
   sendMessage(): void {
     if (this.newMessage.trim()) {
-      console.log("---- message sent server ----");
-      let messageObj = {client_id: this.currentClientId, name: this.currentClientName, message: this.newMessage, files: ''};
+      console.log("---- message sent to server ----");
+      let messageObj = { client_id: this.currentClientId, name: this.currentClientName, message: this.newMessage, files: '' };
       this.socketService.emit('clientMessage', messageObj);
       this.newMessage = '';
       this.socketService.emit('stopTyping', this.currentUser.name);
     }
   }
 
-  
+
   ngOnInit(): void {
     this.socketService.isConnected().subscribe((connected) => {
       if (connected) {
@@ -102,27 +106,24 @@ export class ChatComponent {
     }
     this.socketService.disconnect();
   }
+  
 
-
-  getImageFromName(name: string){
+  getImageFromName(name: string) {
     return this.apiService.getFirstCharFromString(name);
   }
 
 
-  typingMessageInput(){
-    if(this.newMessage.trim()){
-      //this.socketService.emit('startTyping', this.currentUser.name);
-    }else{
-      //this.socketService.emit('stopTyping', this.currentUser.name);
+  typingMessageKeyup(event: any) {
+    this.newMessage = event.target.value.trim();
+    if (event.key === 'Enter') {
+      this.sendMessage();
+    } else {
+      this.socketService.emit('startTyping', this.currentUser.name);
+      clearTimeout(this.typingTimeout);
+      this.typingTimeout = setTimeout(() => {
+        this.socketService.emit('stopTyping', this.currentUser.name);
+      }, 4000);
     }
-  }
-
-
-  typingMessageKeyup(){
-    clearTimeout(this.typingTimeout);
-    this.typingTimeout = setTimeout(() => {
-        //this.socketService.emit('stopTyping', this.currentUser.name);
-    }, 3000);
   }
 
 
@@ -137,10 +138,10 @@ export class ChatComponent {
   }
 
 
-  uploadFile(event: any){
+  uploadFile(event: any) {
     let selectedFile = event.target.files[0];
 
-    if(!selectedFile){
+    if (!selectedFile) {
       alert("Please select a file before uploading."); return;
     }
 
@@ -150,8 +151,8 @@ export class ChatComponent {
     this.apiService.sendUploadFileRequest(formData).subscribe({
       next: (response) => {
         //send image chat 
-        let messageObj = {client_id: this.currentClientId, name: this.currentClientName, message: this.newMessage, files: response.body.file};
-        this.socketService.emit('clientMessage', messageObj); 
+        let messageObj = { client_id: this.currentClientId, name: this.currentClientName, message: this.newMessage, files: response.body.file };
+        this.socketService.emit('clientMessage', messageObj);
         //alert("File uploaded successfully");
         this.sendBtnStatus = false;
       },
@@ -163,8 +164,8 @@ export class ChatComponent {
 
   }
 
-  render_message(string: string){
-    return this.sanitizer.bypassSecurityTrustHtml(this.apiService.transform(string) );
+  render_message(string: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(this.apiService.transform(string));
 
   }
 

@@ -6,7 +6,7 @@
             <div class="col-md-6 col-lg-7 col-xl-8 chat-box-center">
 
                 <ul class="list-unstyled" style="height:500px;overflow: auto;" #scrollContainer>
-
+                    
                     @if (messagesLists.length > 0) {
                     @for (chat of messagesLists; track $index) {
 
@@ -74,15 +74,13 @@
                         <button (click)="toggleEmojiPicker()"
                             style="position:absolute;bottom:2px;left:2px;border: 0;">😊</button>
                         <textarea class="form-control bg-body-tertiary" id="textAreaExample2"
-                            placeholder="Enter text here..." [(ngModel)]="newMessage" rows="4"
-                            (keydown.enter)="sendMessage()" (input)="typingMessageInput()"
-                            (keyup)="typingMessageKeyup()"
-                            style="background: #f3f5f7;border: 1px solid #3f51b5;"></textarea>
+                            placeholder="Enter text here..." rows="4" (keyup)="typingMessageKeyup($event)"
+                            style="background: #f3f5f7;border: 1px solid #3f51b5;" [value]="newMessage"></textarea>
                     </div>
                     <div style="display: flex;column-gap: 10px;justify-content: end;">
                         <input type="file" (change)="this.uploadFile($event)" class="file-inp">
-                        <button mat-flat-button color="primary" (click)="sendMessage()"
-                            style="width:150px;" [disabled]="sendBtnStatus">Send</button>
+                        <button mat-flat-button color="primary" (click)="sendMessage()" style="width:150px;"
+                            [disabled]="sendBtnStatus">Send</button>
                     </div>
                 </div>
 

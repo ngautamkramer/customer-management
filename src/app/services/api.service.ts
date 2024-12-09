@@ -203,10 +203,10 @@ export class ApiService {
     return value.replace(urlRegex, (url) => {
       if (imageRegex.test(url)) {
         // Render as image
-        return `<img src="${url}" alt="Image" style="max-width:250px; max-height: 500px;" />`;
+        return `<img src="${url}" alt="Image" style="max-width: 100%; max-height: 200px;" />`;
       } else if (videoRegex.test(url)) {
         // Render as video
-        return `<video controls style="max-width: 100%; max-height: 200px;">
+        return `<video controls style="max-width: 100%; height: 200px;">
                   <source src="${url}" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>`;
@@ -214,8 +214,8 @@ export class ApiService {
         // Render as YouTube embed
         const videoId = youtubeRegex.exec(url)?.[3];
         return `<iframe 
-                  width="100%" 
-                  height="200" 
+                  width="500" 
+                  height="290" 
                   src="https://www.youtube.com/embed/${videoId}" 
                   frameborder="0" 
                   allowfullscreen>
