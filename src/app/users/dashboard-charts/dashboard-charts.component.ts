@@ -6,23 +6,24 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 Chart.register(ChartDataLabels);
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BaseChartDirective, RouterModule, RouterLink, CommonModule, MatSelectModule],
+  imports: [BaseChartDirective, RouterModule, RouterLink, CommonModule, MatSelectModule, MatProgressBarModule],
   templateUrl: './dashboard-charts.component.html',
   styleUrl: './dashboard-charts.component.css',
   providers: [ApiService],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardChartsComponent {
 
   yearsList: any = [];
   yearCustomerData: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   selectedYear: number = new Date().getFullYear();
+  chatLoaderStatus:boolean = false;
 
   constructor(private apiService: ApiService){}
 
@@ -73,20 +74,22 @@ export class DashboardChartsComponent {
       });
       chartSampleData[index] = checkArray.length;
     });
-
     this.barChartData.datasets[0].data = chartSampleData;
     this.chart?.update();
   }
 
 
-  getAllCustomers(): any {
+  getAllCustomers(): void {
     let userInfo = this.apiService.getUserInfo(); 
-    if(userInfo.user_id){   
+    if(userInfo.user_id){  
+      this.chatLoaderStatus = true; 
       this.apiService.getCustomers(userInfo.user_id).subscribe({
         next: (response) => {
+          this.chatLoaderStatus = false;
           this.setDataOnChart(response.data);
         },
         error: (error) => {
+          this.chatLoaderStatus = false;
           console.error('Error during POST:', error.message);
         }
       });
@@ -105,7 +108,7 @@ export class DashboardChartsComponent {
 
   ngOnInit(): void {
     this.getAllCustomers();
-    this.setAllYearsInDropdown(2015);
+    this.setAllYearsInDropdown(2020);
   }
 
 

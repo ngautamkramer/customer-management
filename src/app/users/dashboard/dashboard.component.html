@@ -1,8 +1,12 @@
-
 <div class="hello-btn-tab">
     <a routerLinkActive="active" [routerLink]="['stats']">Customer Stats</a>
     <a routerLinkActive="active" [routerLink]="['location']">Location</a>
     <a routerLinkActive="active" [routerLink]="['weather']">Camera</a>
     <a routerLinkActive="active" [routerLink]="['chat']">Chat</a>
 </div>
+
+<!-- @if (isLoading) {
+    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+} -->
+
 <router-outlet></router-outlet>

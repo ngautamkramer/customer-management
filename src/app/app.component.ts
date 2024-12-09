@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Event, NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from "./footer/footer.component";
 import { Meta, Title } from '@angular/platform-browser';
@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   
-  isLoading = false;
 
   constructor(
     private titleService: Title,
@@ -22,14 +21,6 @@ export class AppComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {
-
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        this.isLoading = true;
-      } else if (event instanceof NavigationEnd) {
-        this.isLoading = false;
-      }
-    });
   }
 
 
