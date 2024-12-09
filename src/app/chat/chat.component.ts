@@ -66,7 +66,7 @@ export class ChatComponent {
     this.subscriptions.add(messageSub1);
 
 
-    /*const messageSub2 = this.socketService.on<string>('startTyping').subscribe((message: string) => {
+    const messageSub2 = this.socketService.on<string>('startTyping').subscribe((message: string) => {
       this.typingIndicator = `${message} is typing...`;
     });
     this.subscriptions.add(messageSub2);
@@ -74,7 +74,7 @@ export class ChatComponent {
     const messageSub3 = this.socketService.on<string>('stopTyping').subscribe((message: string) => {
       this.typingIndicator = '';
     });
-    this.subscriptions.add(messageSub3);*/
+    this.subscriptions.add(messageSub3);
 
   }
 
