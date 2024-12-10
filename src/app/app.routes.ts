@@ -105,6 +105,10 @@ export const routes: Routes = [
             {
                 path: 'chat',
                 loadComponent: () => import('./chat/chat.component').then((m) => m.ChatComponent),
+            },
+            {
+                path: 'editor',
+                loadComponent: () => import('./users/editor/editor.component').then((m) => m.EditorComponent),
             }
         ]
     }

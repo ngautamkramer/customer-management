@@ -1,0 +1,38 @@
+<div class="row" style="margin-top: 20px;">
+
+    <div class="col-md-3">
+        <div class="toolbar-sidebar">
+            <h3>Texts & Heading</h3>
+            <ul class="ul-style">
+                <li (click)="addObjectOnCanvas('heading')">H</li>
+                <li (click)="addObjectOnCanvas('pragraph')">P</li>
+            </ul>
+        </div>
+
+        <div class="toolbar-sidebar">
+            <h3>Images & Icons</h3>
+            <ul class="ul-style">
+                <li (click)="addObjectOnCanvas('image')">IM</li>
+                <li (click)="addObjectOnCanvas('icon')">IC</li>
+            </ul>
+        </div>
+
+        <div class="toolbar-sidebar">
+            <h3>Shapes</h3>
+            <ul class="ul-style">
+                <li (click)="addObjectOnCanvas('squre')">SQ</li>
+                <li (click)="addObjectOnCanvas('circle')">CR</li>
+                <li (click)="addObjectOnCanvas('rectanle')">RT</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <canvas #fabricCanvas></canvas>
+    </div>
+
+    <div class="col-md-3">
+
+    </div>
+
+</div>
