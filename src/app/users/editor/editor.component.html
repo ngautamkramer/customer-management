@@ -1,3 +1,66 @@
+<div class="toolbar-container">
+    <ul class="toolbar-ul-1">
+        <li [class]="{'toolbar-li-1': true, 'd-none': fontPropertyVisibleStatus.bold}" (click)="fontStyle('bold')">
+            <span><i class="bi bi-type-bold"></i></span></li>
+        <li [class]="{'toolbar-li-1': true, 'd-none': fontPropertyVisibleStatus.italic}" (click)="fontStyle('italic')">
+            <span><i class="bi bi-type-italic"></i></span></li>
+        <li [class]="{'toolbar-li-1': true, 'd-none': fontPropertyVisibleStatus.underline}"
+            (click)="fontStyle('underline')"><span><i class="bi bi-type-underline"></i></span></li>
+        <li [class]="{'toolbar-li-1': true, 'has-child': true, 'd-none': fontPropertyVisibleStatus.font_family}"
+            (click)="fontStyle('fontFamily')">
+            <div class="font-fm-d">
+                <span>{{selectedFontFamily}}</span>
+                <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="toolbar-ul-2">
+                @for (item of allFontList; track $index) {
+                <li class="toolbar-li-2 texts" [style]="{'fontFamily': item}" (click)="this.fontFamilySelect(item)">
+                    {{item}}</li>
+                }
+            </ul>
+        </li>
+        <li [class]="{'toolbar-li-1': true, 'has-child': true, 'd-none': fontPropertyVisibleStatus.alignment}">
+            <span><i class="bi bi-justify"></i></span>
+            <ul class="toolbar-ul-2">
+                <li class="toolbar-li-2" (click)="fontStyle('left')"><i class="bi bi-text-left"></i></li>
+                <li class="toolbar-li-2" (click)="fontStyle('right')"><i class="bi bi-text-center"></i></li>
+                <li class="toolbar-li-2" (click)="fontStyle('center')"><i class="bi bi-text-right"></i></li>
+            </ul>
+        </li>
+        <li
+            [class]="{'toolbar-li-1': true, 'has-child': true, 'font-color': true, 'd-none': fontPropertyVisibleStatus.color}">
+            <span><i class="bi bi-square-fill" [style]="{'color': selectedObjectColor}"></i></span>
+            <div class="toolbar-div-2">
+                <color-sketch [color]="selectedObjectColor"
+                    (onChangeComplete)="changeObjectColor($event)"></color-sketch>
+            </div>
+        </li>
+        <li
+            [class]="{'toolbar-li-1': true, 'has-child': true, 'font-bg-color': true, 'd-none': fontPropertyVisibleStatus.bg_color}">
+            <span><i class="bi bi-square-fill" [style]="{'color': selectedObjectBGColor}"></i></span>
+            <div class="toolbar-div-2">
+                <color-sketch [color]="selectedObjectBGColor"
+                    (onChangeComplete)="changeObjectBGColor($event)"></color-sketch>
+            </div>
+        </li>
+        <li
+            [class]="{'toolbar-li-1': true, 'has-child': true, 'opacity': true, 'd-none': fontPropertyVisibleStatus.opacity}">
+            <span><i class="bi bi-tv"></i></span>
+            <div class="toolbar-div-2">
+                <input type="range" value="100" max="100" style="width:100%;" (change)="objectOpacity($event)">
+            </div>
+        </li>
+
+        <li
+            [class]="{'toolbar-li-1': true, 'has-child': true, 'opacity': true, 'd-none': fontPropertyVisibleStatus.radius}">
+            <span><i class="bi bi-tv"></i></span>
+            <div class="toolbar-div-2">
+                <input type="range" min="0" value="0" max="100" style="width:100%;" (change)="objectBorderRadius($event)">
+            </div>
+        </li>
+    </ul>
+</div>
+
 <div class="row" style="margin-top: 20px;">
 
     <div class="col-md-3">
@@ -12,8 +75,8 @@
         <div class="toolbar-sidebar">
             <h3>Images & Icons</h3>
             <ul class="ul-style">
-                <li (click)="addObjectOnCanvas('image')">IM</li>
-                <li (click)="addObjectOnCanvas('icon')">IC</li>
+                <input type="file" #addImageObject (change)="selectFileAndInsert($event)" class="d-none">
+                <li (click)="addImageObject.click()">IM</li>
             </ul>
         </div>
 

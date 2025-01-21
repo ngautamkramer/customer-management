@@ -1,3 +1,7 @@
+:host {
+    font-family: 'Roboto', sans-serif;
+}
+  
 canvas {
     border: 1px solid #ccc;
 }
@@ -32,4 +36,98 @@ canvas {
 .toolbar-sidebar h3 {
     margin-bottom: 0px;
     font-weight: 500;
+}
+
+.toolbar-ul-1,
+.toolbar-ul-2 {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.toolbar-ul-2{
+    flex-direction: column;
+}
+
+.toolbar-ul-1 .toolbar-li-1 {
+    min-width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.toolbar-ul-2,
+.toolbar-div-2 {
+    position: absolute;
+    top: 50px;
+    display: none;
+    z-index: 1;
+}
+
+.toolbar-li-1.has-child:hover > .toolbar-ul-2,
+.toolbar-li-1.has-child:hover > .toolbar-div-2 {
+    display: flex !important;
+}
+
+.toolbar-ul-1 .toolbar-li-2 {
+    min-width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.toolbar-container li:hover {
+    background-color: #3a8bdb;
+}
+
+.toolbar-li-1.has-child > .toolbar-div-2{
+    background-color: #000;
+}
+
+.toolbar-li-1.has-child.font-color > .toolbar-div-2, .toolbar-li-1.has-child.font-bg-color > .toolbar-div-2{
+    padding: 2px;
+    left: 0px;
+}
+
+
+.toolbar-li-1.has-child.opacity > .toolbar-div-2{
+    width: 200px;
+    height: auto;
+    justify-content: center;
+    padding: 18px;
+    left: 0px;
+}
+
+
+.font-fm-d{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    gap: 3px;
+    font-weight: 100;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.toolbar-li-2.texts{
+    font-size: 14px !important;
+    font-weight: 100 !important;
+    padding-left: 20px;
+    padding-right: 20px;
 }

@@ -227,4 +227,9 @@ export class ApiService {
     });
   }
 
+
+  loadGoogleFont(){
+    return ["Audiowide","Sofia","Trirong", "Open Sans"];
+  }
+
 } 
