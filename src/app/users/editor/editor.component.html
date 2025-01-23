@@ -1,12 +1,12 @@
 <div class="toolbar-container">
     <ul class="toolbar-ul-1">
-        <li [class]="{'toolbar-li-1': true, 'd-none': fontPropertyVisibleStatus.bold}" (click)="fontStyle('bold')">
+        <li [class]="{'toolbar-li-1': true, 'd-none': ObjectPropertyVisibleStatus.bold}" (click)="fontStyle('bold')">
             <span><i class="bi bi-type-bold"></i></span></li>
-        <li [class]="{'toolbar-li-1': true, 'd-none': fontPropertyVisibleStatus.italic}" (click)="fontStyle('italic')">
+        <li [class]="{'toolbar-li-1': true, 'd-none': ObjectPropertyVisibleStatus.italic}" (click)="fontStyle('italic')">
             <span><i class="bi bi-type-italic"></i></span></li>
-        <li [class]="{'toolbar-li-1': true, 'd-none': fontPropertyVisibleStatus.underline}"
+        <li [class]="{'toolbar-li-1': true, 'd-none': ObjectPropertyVisibleStatus.underline}"
             (click)="fontStyle('underline')"><span><i class="bi bi-type-underline"></i></span></li>
-        <li [class]="{'toolbar-li-1': true, 'has-child': true, 'd-none': fontPropertyVisibleStatus.font_family}"
+        <li [class]="{'toolbar-li-1': true, 'has-child': true, 'd-none': ObjectPropertyVisibleStatus.font_family}"
             (click)="fontStyle('fontFamily')">
             <div class="font-fm-d">
                 <span>{{selectedFontFamily}}</span>
@@ -19,7 +19,7 @@
                 }
             </ul>
         </li>
-        <li [class]="{'toolbar-li-1': true, 'has-child': true, 'd-none': fontPropertyVisibleStatus.alignment}">
+        <li [class]="{'toolbar-li-1': true, 'has-child': true, 'd-none': ObjectPropertyVisibleStatus.alignment}">
             <span><i class="bi bi-justify"></i></span>
             <ul class="toolbar-ul-2">
                 <li class="toolbar-li-2" (click)="fontStyle('left')"><i class="bi bi-text-left"></i></li>
@@ -28,7 +28,7 @@
             </ul>
         </li>
         <li
-            [class]="{'toolbar-li-1': true, 'has-child': true, 'font-color': true, 'd-none': fontPropertyVisibleStatus.color}">
+            [class]="{'toolbar-li-1': true, 'has-child': true, 'font-color': true, 'd-none': ObjectPropertyVisibleStatus.color}">
             <span><i class="bi bi-square-fill" [style]="{'color': selectedObjectColor}"></i></span>
             <div class="toolbar-div-2">
                 <color-sketch [color]="selectedObjectColor"
@@ -36,7 +36,7 @@
             </div>
         </li>
         <li
-            [class]="{'toolbar-li-1': true, 'has-child': true, 'font-bg-color': true, 'd-none': fontPropertyVisibleStatus.bg_color}">
+            [class]="{'toolbar-li-1': true, 'has-child': true, 'font-bg-color': true, 'd-none': ObjectPropertyVisibleStatus.bg_color}">
             <span><i class="bi bi-square-fill" [style]="{'color': selectedObjectBGColor}"></i></span>
             <div class="toolbar-div-2">
                 <color-sketch [color]="selectedObjectBGColor"
@@ -44,7 +44,7 @@
             </div>
         </li>
         <li
-            [class]="{'toolbar-li-1': true, 'has-child': true, 'opacity': true, 'd-none': fontPropertyVisibleStatus.opacity}">
+            [class]="{'toolbar-li-1': true, 'has-child': true, 'opacity': true, 'd-none': ObjectPropertyVisibleStatus.opacity}">
             <span><i class="bi bi-tv"></i></span>
             <div class="toolbar-div-2">
                 <input type="range" value="100" max="100" style="width:100%;" (change)="objectOpacity($event)">
@@ -52,12 +52,16 @@
         </li>
 
         <li
-            [class]="{'toolbar-li-1': true, 'has-child': true, 'opacity': true, 'd-none': fontPropertyVisibleStatus.radius}">
+            [class]="{'toolbar-li-1': true, 'has-child': true, 'opacity': true, 'd-none': ObjectPropertyVisibleStatus.radius}">
             <span><i class="bi bi-tv"></i></span>
             <div class="toolbar-div-2">
                 <input type="range" min="0" value="0" max="100" style="width:100%;" (change)="objectBorderRadius($event)">
             </div>
         </li>
+
+        <li [class]="{'toolbar-li-1': true, 'd-none': ObjectPropertyVisibleStatus.delete}" (click)="objectDelete()">
+            <span><i class="bi bi-trash"></i></span></li>
+
     </ul>
 </div>
 
@@ -90,12 +94,8 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-9">
         <canvas #fabricCanvas></canvas>
-    </div>
-
-    <div class="col-md-3">
-
     </div>
 
 </div>

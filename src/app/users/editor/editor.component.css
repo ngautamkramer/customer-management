@@ -131,3 +131,10 @@ canvas {
     padding-left: 20px;
     padding-right: 20px;
 }
+
+
+canvas {
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    transform: translateZ(0);
+}

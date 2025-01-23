@@ -21,7 +21,7 @@ export class EditorComponent implements AfterViewInit {
   selectedFontFamily: string = "Open Sans";
   // end all variable for editor
   allFontList: any = [];
-  fontPropertyVisibleStatus: any = {bold: false, italic: false, underline: false, font_family: false, alignment: false, color: false, bg_color: false, opacity: false, radius: false};
+  ObjectPropertyVisibleStatus: any = {bold: false, italic: false, underline: false, font_family: false, alignment: false, color: false, bg_color: false, opacity: false, radius: false, delete: false};
 
   @ViewChild('fabricCanvas', { static: true }) fabricCanvas!: ElementRef<HTMLCanvasElement>;
   private canvas: any;
@@ -53,14 +53,24 @@ export class EditorComponent implements AfterViewInit {
   }
 
 
+  setHighDPI(canvas: any, width: any, height: any) {
+    var dpr = window.devicePixelRatio || 1;  // Get device pixel ratio
+    canvas.setWidth(width * dpr);
+    canvas.setHeight(height * dpr);
+    canvas.setZoom(1 / dpr);  // Scale down for correct display size
+}
+
+
   private initFabricCanvas(): void {
 
     const canvasElement = this.fabricCanvas.nativeElement;
+
     this.canvas = new fabric.Canvas(canvasElement, {
-      width: 640,
-      height: 480,
-      stateful: true
+      backgroundColor: 'white',
+      enableRetinaScaling: true
     });
+
+    this.setHighDPI(this.canvas, 965, 600);  // Set your desired logical canvas size
 
     /*this.canvas.on('object:moving', (e: any) => {
       const obj = e.target; // The object being moved
@@ -101,27 +111,27 @@ export class EditorComponent implements AfterViewInit {
 
     console.log(objectType);
     if (objectType == "textbox"){
-      this.fontPropertyVisibleStatus.bold = false;
-      this.fontPropertyVisibleStatus.italic = false;
-      this.fontPropertyVisibleStatus.underline = false;
-      this.fontPropertyVisibleStatus.font_family = false;
-      this.fontPropertyVisibleStatus.alignment = false;
-      this.fontPropertyVisibleStatus.color = false;
-      this.fontPropertyVisibleStatus.bg_color = false;
-      this.fontPropertyVisibleStatus.opacity = false;
-      this.fontPropertyVisibleStatus.radius = true;
+      this.ObjectPropertyVisibleStatus.bold = false;
+      this.ObjectPropertyVisibleStatus.italic = false;
+      this.ObjectPropertyVisibleStatus.underline = false;
+      this.ObjectPropertyVisibleStatus.font_family = false;
+      this.ObjectPropertyVisibleStatus.alignment = false;
+      this.ObjectPropertyVisibleStatus.color = false;
+      this.ObjectPropertyVisibleStatus.bg_color = false;
+      this.ObjectPropertyVisibleStatus.opacity = false;
+      this.ObjectPropertyVisibleStatus.radius = true;
     }else if(objectType == "rect" || objectType == "circle"){
-      this.fontPropertyVisibleStatus.bold = true;
-      this.fontPropertyVisibleStatus.italic = true;
-      this.fontPropertyVisibleStatus.underline = true;
-      this.fontPropertyVisibleStatus.font_family = true;
-      this.fontPropertyVisibleStatus.alignment = true;
-      this.fontPropertyVisibleStatus.color = true;
-      this.fontPropertyVisibleStatus.bg_color = false;
-      this.fontPropertyVisibleStatus.opacity = false;
-      this.fontPropertyVisibleStatus.radius = false;
+      this.ObjectPropertyVisibleStatus.bold = true;
+      this.ObjectPropertyVisibleStatus.italic = true;
+      this.ObjectPropertyVisibleStatus.underline = true;
+      this.ObjectPropertyVisibleStatus.font_family = true;
+      this.ObjectPropertyVisibleStatus.alignment = true;
+      this.ObjectPropertyVisibleStatus.color = true;
+      this.ObjectPropertyVisibleStatus.bg_color = false;
+      this.ObjectPropertyVisibleStatus.opacity = false;
+      this.ObjectPropertyVisibleStatus.radius = false;
     }
-
+    //this.ObjectPropertyVisibleStatus.delete = false;
   }
 
   selectFileAndInsert(event: any) {
@@ -156,23 +166,23 @@ export class EditorComponent implements AfterViewInit {
     let object: any;
     if (type == "heading") {
 
-      object = new fabric.Textbox('Heading 1', { lockMovementOutsideCanvas: true, fill: 'black', left: 30, top: 30, width: 200, fontWeight: 500 });
+      object = new fabric.Textbox('Heading 1', { fill: 'black', left: 30, top: 30, width: 300, fontSize: 70, fontWeight: 500, objectCaching: false, strokeWidth: 1, strokeUniform: true});
 
     } else if (type == "pragraph") {
 
-      object = new fabric.Textbox('This is paragraph text', { lockMovementOutsideCanvas: true, fill: 'black', left: 50, top: 50, width: 380, fontWeight: 500 });
+      object = new fabric.Textbox('This is paragraph text', { fill: 'black', left: 50, top: 50, width: 700, fontSize: 70, fontWeight: 500, objectCaching: false, strokeWidth: 1, strokeUniform: true });
 
     } else if (type == "squre") {
 
-      object = new fabric.Rect({ left: 50, top: 50, lockMovementOutsideCanvas: true, fill: '#000000', width: 100, height: 100 });
+      object = new fabric.Rect({ left: 50, top: 50, fill: '#000000', width: 100, height: 100 });
 
     } else if (type == "circle") {
 
-      object = new fabric.Circle({ radius: 100, lockMovementOutsideCanvas: true, fill: 'green', left: 60, top: 60 });
+      object = new fabric.Circle({ radius: 100, fill: 'green', left: 60, top: 60 });
 
     } else if (type == "rectanle") {
 
-      object = new fabric.Rect({ left: 60, top: 60, lockMovementOutsideCanvas: true, fill: '#000000', width: 150, height: 100 });
+      object = new fabric.Rect({ left: 60, top: 60, fill: '#000000', width: 150, height: 100 });
 
     }
 
@@ -246,6 +256,17 @@ export class EditorComponent implements AfterViewInit {
     let object = this.canvas.getActiveObject();
     object.set({ rx: event.target.value * 100 / 100, ry: event.target.value * 100 / 100 });
     this.canvas.renderAll();
+  }
+
+  objectDelete(){
+    var activeObjects = this.canvas.getActiveObjects();
+    if (activeObjects.length > 0) {
+        activeObjects.forEach((obj: any) => {
+          this.canvas.remove(obj);
+        });
+        this.canvas.discardActiveObject();
+        this.canvas.requestRenderAll();
+    }
   }
 
 
